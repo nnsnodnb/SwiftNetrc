@@ -192,7 +192,7 @@ public final class SwiftNetrc {
 
     }
 
-    subscript(_ machine: String) -> NetrcMachine? {
+    public subscript(_ machine: String) -> NetrcMachine? {
         return machines[machine]
     }
 

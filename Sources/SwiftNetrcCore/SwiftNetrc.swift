@@ -207,8 +207,8 @@ public final class SwiftNetrc {
 public struct NetrcMachine {
     var name = ""
     private var properties: [String: String] = [:]
-    var login: String?
-    var password: String?
+    internal(set) public var login: String?
+    internal(set) public var password: String?
     /// Alias for "name"
     var machine: String { return name }
 

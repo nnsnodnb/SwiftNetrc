@@ -25,10 +25,10 @@ public final class SwiftNetrc {
     }
 
     /// The URL to the .netrc file. Defaults to ~/.netrc
-    open var netrcFile: URL = getDefaultNetrc()
+    public var netrcFile: URL = getDefaultNetrc()
 
     /// Return a URL to ~/.netrc using method appropriate for the OS
-    open static func getDefaultNetrc() -> URL {
+    public static func getDefaultNetrc() -> URL {
         if #available(OSX 10.12, *) {
             // This *might* return the user's home directory regardless of sandboxing?
             return FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".netrc")
@@ -69,7 +69,7 @@ public final class SwiftNetrc {
     }
 
     /// Reads the contents of .netrc into `machines`
-    open func load() throws {
+    public func load() throws {
         let attributes = try FileManager.default.attributesOfItem(atPath: netrcFile.path)
         // .netrc must be read and/or write for user only, so 600 or 400 are ok, nothing else.
         let okPermissions: Int16 = 0o600
@@ -102,7 +102,7 @@ public final class SwiftNetrc {
 //        }
         let tokenContent = content
 
-        var tokens = tokenContent.trimmingCharacters(in: .whitespacesAndNewlines)
+        let tokens = tokenContent.trimmingCharacters(in: .whitespacesAndNewlines)
             .components(separatedBy: .whitespacesAndNewlines)
 
         var currentMachineName = ""
@@ -205,7 +205,7 @@ public final class SwiftNetrc {
 
 /// Represents a machine whose information is stored in .netrc
 public struct NetrcMachine {
-    var name = ""
+    internal(set) public var name = ""
     private var properties: [String: String] = [:]
     internal(set) public var login: String?
     internal(set) public var password: String?
@@ -218,7 +218,7 @@ public struct NetrcMachine {
     /// Macdef: Macro definition. Stored but not used, unless you want to execute an FTP macro
     var macdef: String?
 
-    subscript(_ name: String) -> String? {
+    public subscript(_ name: String) -> String? {
         get {
             return properties[name]
         }
